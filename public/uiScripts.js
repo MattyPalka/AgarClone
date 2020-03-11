@@ -20,3 +20,10 @@ $('.name-form').submit((event)=>{
     $('#spawnModal').modal('show')
     document.querySelector('.player-name').innerHTML = player.name
 })
+
+// Hide all modals on the game start, show what was hidden on start, initialize game
+$('.start-game').click((event)=>{
+    $('.modal').modal('hide')
+    $('.hiddenOnStart').removeAttr('hidden')
+    init()
+})
