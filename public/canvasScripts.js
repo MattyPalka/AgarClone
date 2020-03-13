@@ -5,9 +5,9 @@ function init(){
 player.locX = Math.floor(500 * Math.random() + 1)
 player.locY = Math.floor(500 * Math.random() + 1)
 function draw(){
-    //clear the screen between frames and reset the translate
-    context.clearRect(0,0,canvas.width, canvas.height)
+    // reset the translate and clear the screen between frames 
     context.setTransform(1,0,0,1,0,0)
+    context.clearRect(0,0,canvas.width, canvas.height)
 
     //attach the camera to the player
     const camX = -player.locX + canvas.width/2
@@ -22,6 +22,14 @@ function draw(){
     context.lineWidth = 3
     context.strokeStyle = 'rgb(0,0,255)'
     context.stroke()
+
+    orbs.forEach((orb)=> {
+        context.beginPath()
+        context.fillStyle = orb.color
+        context.arc(orb.locX, orb.locY, orb.radius, 0, Math.PI * 2)
+        context.fill()
+    })
+
     requestAnimationFrame(draw)
 }
 
