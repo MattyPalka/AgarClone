@@ -3,6 +3,7 @@ let wWidth = $(window).width()
 let player = {} // this will hold all things with 'this' player
 
 let orbs = []
+let players = []
 
 let canvas = document.querySelector('#the-canvas')
 let context = canvas.getContext('2d')
