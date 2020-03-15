@@ -102,6 +102,10 @@ io.sockets.on('connection', (socket) => {
             // no player collision
         })
     })
+
+    socket.on('disconnect', (data)=>{
+        
+    })
 })
 
 function getLeaderboard() {

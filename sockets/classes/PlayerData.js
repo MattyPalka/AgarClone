@@ -1,6 +1,9 @@
+const uuidv4 = require('uuid/v4')
+
 // This is data about the player that needs to be sent to all the sockets
 class PlayerData{
     constructor(playerName, settings){
+        this.uid = uuidv4()
         this.name = playerName
         this.locX = Math.floor(settings.worldWidth * Math.random() + 100)
         this.locY = Math.floor(settings.worldHeight * Math.random() + 100)
