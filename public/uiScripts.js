@@ -30,3 +30,5 @@ $('.start-game').click((event)=>{
     $('.hiddenOnStart').removeAttr('hidden')
     init()
 })
+
+// TODO: add login with github (or facebook?)

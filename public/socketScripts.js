@@ -43,4 +43,16 @@ socket.on('updateLeaderboard', (data) => {
         <li class="leaderboard-player">${curPlayer.name}: ${curPlayer.score}</li>
         `
     })
+
+    // TODO: update the score window in upper left
+})
+
+socket.on('playerDeath', (data)=> {
+    document.querySelector('#game-message').innerHTML = `${data.died.name} got absorbed by ${data.killedBy.name}`
+    $('game-message').css({ 'opacity': 1})
+    $('game-message').show()
+    $('game-message').fadeOut(4000)
+
+    // TODO: if our player died (data.died) then set a var isAlive to false
+    // and in canvasScript use that var that attach camera is only run when player is alive
 })

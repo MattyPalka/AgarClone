@@ -88,6 +88,9 @@ io.sockets.on('connection', (socket) => {
 
             // emit to all sockets the orb to replace
             io.sockets.emit('orbSwitch', orbData)
+            
+            // TODO: add zoom out when player absorbs the orbs, probably good thing is to 
+            // try adding it in somewhere in check collisions
 
         }).catch(() => {
             //catch runs if reject runs | no collision happened
@@ -98,6 +101,10 @@ io.sockets.on('connection', (socket) => {
 
             // everysocket needs to know the leaderboard has changed
             io.sockets.emit('updateLeaderboard', getLeaderboard())
+            io.sockets.emit('playerDeath', data)
+
+            // TODO: add zoom out when player absorbs the other player, probably good thing is to 
+            // try adding it in somewhere in check collisions
         }).catch(() => {
             // no player collision
         })
