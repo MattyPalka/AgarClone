@@ -43,7 +43,7 @@ io.sockets.on('connection', (socket) => {
         let playerConfig = new PlayerConfig(settings)
         // make a playerData object
         let playerData = new PlayerData(data.playerName, settings)
-        
+
         // make a master player object to hold both
         player = new Player(socket.id, playerConfig, playerData)
 
@@ -54,7 +54,7 @@ io.sockets.on('connection', (socket) => {
                 playerY: player.playerData.locY
             })
         }, 33) // 1000ms / 30 = 33
-        
+
         socket.emit('initReturn', { orbs })
         players.push(playerData)
     })
@@ -82,6 +82,10 @@ io.sockets.on('connection', (socket) => {
                 orbIndex: data,
                 newOrb: orbs[data]
             }
+
+            // everysocket needs to know the leaderboard has changed
+            io.sockets.emit('updateLeaderboard', getLeaderboard())
+
             // emit to all sockets the orb to replace
             io.sockets.emit('orbSwitch', orbData)
 
@@ -92,12 +96,24 @@ io.sockets.on('connection', (socket) => {
         let playerDeath = checkForPlayerCollisions(player.playerData, player.playerConfig, players, player.socketId)
         playerDeath.then((data) => {
 
+            // everysocket needs to know the leaderboard has changed
+            io.sockets.emit('updateLeaderboard', getLeaderboard())
         }).catch(() => {
             // no player collision
         })
     })
-
 })
+
+function getLeaderboard() {
+    players.sort((a, b) => { return b.score - a.score })
+    let leaderBoard = players.map((curPlayer)=> {
+        return {
+            name: curPlayer.name,
+            score: curPlayer.score
+        }
+    })
+    return leaderBoard
+}
 
 function initGame() {
     for (let i = 0; i < settings.defaultOrbs; i++) {
