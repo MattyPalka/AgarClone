@@ -1,4 +1,4 @@
-const uuidv4 = require('uuid/v4')
+const {v4: uuidv4} = require('uuid')
 
 // This is data about the player that needs to be sent to all the sockets
 class PlayerData{
