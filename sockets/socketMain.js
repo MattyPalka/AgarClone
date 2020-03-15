@@ -103,14 +103,22 @@ io.sockets.on('connection', (socket) => {
         })
     })
 
-    socket.on('disconnect', (data)=>{
-        
+    socket.on('disconnect', (data) => {
+        //if player exists
+        if (player.playerData) {
+            players.forEach((curPlayer, i) => {
+                if (curPlayer.uid == player.playerData.uid) {
+                    players.splice(i, 1)
+                    io.sockets.emit('updateLeaderboard', getLeaderboard())
+                }
+            })
+        }
     })
 })
 
 function getLeaderboard() {
     players.sort((a, b) => { return b.score - a.score })
-    let leaderBoard = players.map((curPlayer)=> {
+    let leaderBoard = players.map((curPlayer) => {
         return {
             name: curPlayer.name,
             score: curPlayer.score
